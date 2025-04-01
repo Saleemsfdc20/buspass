@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375px, initial-scale=1.0">
+<title>Digital Bus Pass</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body { background: #000; width: 375px; margin: 0 auto; }
+</style>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#6B21A8',
+secondary: '#1D4ED8'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+</head>
+<body class="font-sans">
+<div id="app" class="relative min-h-screen">
+<nav class="fixed bottom-0 w-full bg-zinc-900 border-t border-zinc-800 z-50">
+<div class="flex justify-around items-center h-16">
+<button class="flex flex-col items-center justify-center w-1/4 text-white active" onclick="switchTab(this, 'home')">
+<i class="ri-home-4-line ri-lg mb-1"></i>
+<span class="text-xs">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center w-1/4 text-zinc-400" onclick="switchTab(this, 'routes')">
+<i class="ri-route-line ri-lg mb-1"></i>
+<span class="text-xs">Routes</span>
+</button>
+<button class="flex flex-col items-center justify-center w-1/4 text-zinc-400" onclick="switchTab(this, 'qr')">
+<i class="ri-qr-code-line ri-lg mb-1"></i>
+<span class="text-xs">QR Code</span>
+</button>
+<button class="flex flex-col items-center justify-center w-1/4 text-zinc-400" onclick="switchTab(this, 'profile')">
+<i class="ri-user-line ri-lg mb-1"></i>
+<span class="text-xs">Profile</span>
+</button>
+</div>
+</nav>
+<div id="home" class="page active">
+<header class="fixed top-0 w-full z-50">
+<div class="bg-primary h-14 flex items-center justify-between px-4">
+<button class="w-8 h-8 flex items-center justify-center text-white">
+<i class="ri-menu-line ri-xl"></i>
+</button>
+<h1 class="text-white text-lg font-medium">Digital Bus Pass</h1>
+<button class="w-8 h-8 flex items-center justify-center text-white">
+<i class="ri-notification-3-line ri-xl"></i>
+</button>
+</div>
+</header>
+<main class="pt-14 pb-20 px-4 bg-black min-h-screen">
+<div class="mt-4 bg-secondary rounded-lg p-4 text-white">
+<div class="text-center mb-4">
+<div class="text-lg font-medium">
+Thane Stn. E Kopari
+</div>
+<div class="flex justify-center my-2">
+<i class="ri-arrow-left-right-line ri-xl"></i>
+</div>
+<div class="text-lg font-medium">TCS Olympus</div>
+</div>
+<div class="flex justify-between text-sm">
+<div>
+Office In Time - 08:00
+</div>
+<div>
+Office Out Time - 18:45
+</div>
+</div>
+</div>
+<div class="mt-4 bg-zinc-900 rounded-lg p-4 text-white">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<div class="text-zinc-400 text-sm mb-1">Name</div>
+<div class="font-medium">
+SIDDHARTH DYAMGOND
+</div>
+</div>
+<div>
+<div class="text-zinc-400 text-sm mb-1">Employee ID</div>
+<div class="font-medium">
+2481448
+</div>
+</div>
+<div>
+<div class="text-zinc-400 text-sm mb-1">Bus Stop Name</div>
+<div class="font-medium">
+Thane Stn. E Kopari
+</div>
+</div>
+<div>
+<div class="text-zinc-400 text-sm mb-1">Route Type</div>
+<div class="font-medium">Both</div>
+</div>
+<div>
+<div class="text-zinc-400 text-sm mb-1">Start Date</div>
+<div class="font-medium">01-Mar-2024</div>
+</div>
+<div>
+<div class="text-zinc-400 text-sm mb-1">End Date</div>
+<div class="font-medium">31-Mar-2024</div>
+</div>
+</div>
+<div class="mt-4">
+<div class="text-zinc-400 text-sm mb-1">Route</div>
+<div class="font-medium">Thane Stn. E Kopari To TCS Olympus And Return Via-FAST</div>
+</div>
+</div>
+<div class="mt-8 flex justify-center">
+<img src="https://static.readdy.ai/image/3619cace10b99d87124a003d7c8f28d2/b2c8d99fb22ebf6858eced080063516f.jpeg" alt="TCS Logo" class="h-16">
+</div>
+</main>
+</div>
+<div id="routes" class="page hidden">
+<header class="fixed top-0 w-full z-50">
+<div class="bg-primary h-14 flex items-center justify-between px-4">
+<h1 class="text-white text-lg font-medium">Bus Routes</h1>
+<button class="w-8 h-8 flex items-center justify-center text-white" onclick="showRouteFilter()">
+<i class="ri-filter-3-line ri-xl"></i>
+</button>
+</div>
+</header>
+<main class="pt-14 pb-20 px-4 bg-black min-h-screen">
+<div class="mt-4 space-y-4">
+<div class="bg-zinc-900 rounded-lg p-4 text-white">
+<div class="flex justify-between items-center mb-2">
+<div class="text-lg font-medium">Route 101</div>
+<div class="text-sm text-zinc-400">30 mins</div>
+</div>
+<div class="text-sm text-zinc-400">Via Mulund, Bhandup, Kanjurmarg</div>
+<div class="mt-2 flex justify-between items-center">
+<div class="text-sm">Next bus: 10:30 AM</div>
+<button class="bg-primary text-white px-4 py-1 rounded-button text-sm" onclick="trackBus('101')">Track</button>
+</div>
+</div>
+<div class="bg-zinc-900 rounded-lg p-4 text-white">
+<div class="flex justify-between items-center mb-2">
+<div class="text-lg font-medium">Route 102</div>
+<div class="text-sm text-zinc-400">45 mins</div>
+</div>
+<div class="text-sm text-zinc-400">Via Powai, Vikhroli, Ghatkopar</div>
+<div class="mt-2 flex justify-between items-center">
+<div class="text-sm">Next bus: 11:00 AM</div>
+<button class="bg-primary text-white px-4 py-1 rounded-button text-sm" onclick="trackBus('102')">Track</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<div id="qr" class="page hidden">
+<header class="fixed top-0 w-full z-50">
+<div class="bg-primary h-14 flex items-center justify-between px-4">
+<h1 class="text-white text-lg font-medium">QR Code</h1>
+</div>
+</header>
+<main class="pt-14 pb-20 px-4 bg-black min-h-screen flex flex-col items-center justify-center">
+<div class="bg-white p-8 rounded-lg">
+<img src="https://public.readdy.ai/ai/img_res/acf2b7092c019a34da2c110e745fafa9.jpg" alt="QR Code" class="w-48 h-48">
+</div>
+<div class="mt-4 text-white text-center">
+<p class="text-lg font-medium">Scan to verify pass</p>
+<p class="text-sm text-zinc-400 mt-2">Valid until March 31, 2024</p>
+</div>
+</main>
+</div>
+<div id="profile" class="page hidden">
+<header class="fixed top-0 w-full z-50">
+<div class="bg-primary h-14 flex items-center justify-between px-4">
+<h1 class="text-white text-lg font-medium">Profile</h1>
+<button class="w-8 h-8 flex items-center justify-center text-white" onclick="showSettings()">
+<i class="ri-settings-3-line ri-xl"></i>
+</button>
+</div>
+</header>
+<main class="pt-14 pb-20 px-4 bg-black min-h-screen">
+<div class="mt-4 flex flex-col items-center">
+<div class="w-24 h-24 rounded-full bg-zinc-800 flex items-center justify-center text-white">
+<i class="ri-user-3-line ri-3x"></i>
+</div>
+<h2 class="mt-4 text-white text-xl font-medium">SIDDHARTH DYAMGOND</h2>
+<p class="text-zinc-400">Employee ID: 2481448</p>
+</div>
+<div class="mt-8 space-y-4">
+<div class="bg-zinc-900 rounded-lg p-4">
+<h3 class="text-white font-medium mb-4">Pass Details</h3>
+<div class="space-y-2">
+<div class="flex justify-between">
+<span class="text-zinc-400">Pass Type</span>
+<span class="text-white">Monthly</span>
+</div>
+<div class="flex justify-between">
+<span class="text-zinc-400">Valid From</span>
+<span class="text-white">01-Mar-2024</span>
+</div>
+<div class="flex justify-between">
+<span class="text-zinc-400">Valid Until</span>
+<span class="text-white">31-Mar-2024</span>
+</div>
+</div>
+</div>
+<div class="bg-zinc-900 rounded-lg p-4">
+<h3 class="text-white font-medium mb-4">Contact Information</h3>
+<div class="space-y-2">
+<div class="flex justify-between">
+<span class="text-zinc-400">Email</span>
+<span class="text-white">siddharth.d@tcs.com</span>
+</div>
+<div class="flex justify-between">
+<span class="text-zinc-400">Phone</span>
+<span class="text-white">+91 98765 43210</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+<script>
+const mockUserData = {
+name: "SIDDHARTH DYAMGOND",
+employeeId: "2481448",
+busStop: "Thane Stn. E Kopari",
+routeType: "Both",
+startDate: "01-Mar-2024",
+endDate: "31-Mar-2024",
+route: "Thane Stn. E Kopari To TCS Olympus And Return Via-FAST",
+email: "siddharth.d@tcs.com",
+phone: "+91 98765 43210"
+};
+function switchTab(element, tabId) {
+document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+document.querySelectorAll('nav button').forEach(btn => {
+btn.classList.remove('text-white');
+btn.classList.add('text-zinc-400');
+});
+document.getElementById(tabId).classList.remove('hidden');
+element.classList.remove('text-zinc-400');
+element.classList.add('text-white');
+}
+function showRouteFilter() {
+const dialog = document.createElement('div');
+dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+dialog.innerHTML = `
+<div class="bg-white rounded-lg p-4 w-64">
+<div class="text-lg font-medium mb-4">Filter Routes</div>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-gray-700">Direction</label>
+<select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+<option>Both</option>
+<option>Inbound</option>
+<option>Outbound</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700">Time</label>
+<select class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+<option>All</option>
+<option>Morning</option>
+<option>Evening</option>
+</select>
+</div>
+<button class="w-full bg-primary text-white py-2 rounded-button">Apply</button>
+</div>
+</div>
+`;
+document.body.appendChild(dialog);
+dialog.addEventListener('click', (e) => {
+if (e.target === dialog) {
+dialog.remove();
+}
+});
+}
+function trackBus(routeId) {
+const dialog = document.createElement('div');
+dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+dialog.innerHTML = `
+<div class="bg-white rounded-lg p-4 w-80">
+<div class="text-lg font-medium mb-4">Track Bus - Route ${routeId}</div>
+<div class="relative h-40 mb-4">
+<img src="https://public.readdy.ai/gen_page/map_placeholder_1280x720.png" alt="Map" class="w-full h-full object-cover rounded">
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+<i class="ri-bus-2-fill ri-2x text-primary"></i>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between">
+<span class="text-gray-600">Current Location</span>
+<span class="font-medium">Mulund Check Naka</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">ETA</span>
+<span class="font-medium">10 minutes</span>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-2 rounded-button mt-4">Close</button>
+</div>
+`;
+document.body.appendChild(dialog);
+dialog.addEventListener('click', (e) => {
+if (e.target === dialog) {
+dialog.remove();
+}
+});
+}
+function editField(field) {
+const dialog = document.createElement('div');
+dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+let title = '';
+let currentValue = '';
+let inputType = 'text';
+switch(field) {
+case 'name':
+title = 'Edit Name';
+currentValue = mockUserData.name;
+break;
+case 'employeeId':
+title = 'Edit Employee ID';
+currentValue = mockUserData.employeeId;
+break;
+case 'busStop':
+title = 'Edit Bus Stop';
+currentValue = mockUserData.busStop;
+break;
+case 'inTime':
+title = 'Edit Office In Time';
+currentValue = '08:00';
+inputType = 'time';
+break;
+case 'outTime':
+title = 'Edit Office Out Time';
+currentValue = '18:45';
+inputType = 'time';
+break;
+}
+dialog.innerHTML = `
+<div class="bg-white rounded-lg p-4 w-80">
+<div class="text-lg font-medium mb-4">${title}</div>
+<input type="${inputType}" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4" value="${currentValue}">
+<div class="flex space-x-2">
+<button class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-button" onclick="this.closest('.fixed').remove()">Cancel</button>
+<button class="flex-1 bg-primary text-white py-2 rounded-button" onclick="saveField('${field}', this.parentElement.previousElementSibling.value)">Save</button>
+</div>
+</div>
+`;
+document.body.appendChild(dialog);
+dialog.addEventListener('click', (e) => {
+if (e.target === dialog) {
+dialog.remove();
+}
+});
+}
+function saveField(field, value) {
+switch(field) {
+case 'name':
+mockUserData.name = value;
+document.querySelectorAll('.font-medium:contains("' + mockUserData.name + '")').forEach(el => el.textContent = value);
+break;
+case 'employeeId':
+mockUserData.employeeId = value;
+document.querySelectorAll('.font-medium:contains("' + mockUserData.employeeId + '")').forEach(el => el.textContent = value);
+break;
+case 'busStop':
+mockUserData.busStop = value;
+document.querySelectorAll('.font-medium:contains("' + mockUserData.busStop + '")').forEach(el => el.textContent = value);
+break;
+case 'inTime':
+document.querySelector('div:contains("Office In Time")').textContent = 'Office In Time - ' + value;
+break;
+case 'outTime':
+document.querySelector('div:contains("Office Out Time")').textContent = 'Office Out Time - ' + value;
+break;
+}
+document.querySelector('.fixed').remove();
+const notification = document.createElement('div');
+notification.className = 'fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-lg';
+notification.textContent = 'Successfully updated!';
+document.body.appendChild(notification);
+setTimeout(() => notification.remove(), 2000);
+}
+function showSettings() {
+const dialog = document.createElement('div');
+dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+dialog.innerHTML = `
+<div class="bg-white rounded-lg p-4 w-64">
+<div class="text-lg font-medium mb-4">Settings</div>
+<div class="space-y-2">
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2">Notification Preferences</button>
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2">Change Password</button>
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2">Help & Support</button>
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2">About</button>
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2 text-red-600">Logout</button>
+</div>
+</div>
+`;
+document.body.appendChild(dialog);
+dialog.addEventListener('click', (e) => {
+if (e.target === dialog) {
+dialog.remove();
+}
+});
+}
+document.addEventListener('DOMContentLoaded', () => {
+const menuBtn = document.querySelector('.ri-menu-line').parentElement;
+const notificationBtn = document.querySelector('.ri-notification-3-line').parentElement;
+menuBtn.addEventListener('click', () => {
+const dialog = document.createElement('div');
+dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+dialog.innerHTML = `
+<div class="bg-white rounded-lg p-4 w-64">
+<div class="text-lg font-medium mb-4">Menu</div>
+<div class="space-y-2">
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2">My Profile</button>
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2">Pass History</button>
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2">Settings</button>
+<button class="w-full text-left py-2 hover:bg-gray-100 rounded px-2">Logout</button>
+</div>
+</div>
+`;
+document.body.appendChild(dialog);
+dialog.addEventListener('click', (e) => {
+if (e.target === dialog) {
+dialog.remove();
+}
+});
+});
+notificationBtn.addEventListener('click', () => {
+const dialog = document.createElement('div');
+dialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+dialog.innerHTML = `
+<div class="bg-white rounded-lg p-4 w-64">
+<div class="text-lg font-medium mb-4">Notifications</div>
+<div class="space-y-2">
+<div class="p-2 bg-gray-50 rounded">
+<div class="font-medium">Route Update</div>
+<div class="text-sm text-gray-600">Route 101 is delayed by 10 minutes</div>
+<div class="text-xs text-gray-400 mt-1">2 hours ago</div>
+</div>
+<div class="p-2 bg-gray-50 rounded">
+<div class="font-medium">Pass Renewal</div>
+<div class="text-sm text-gray-600">Your pass will expire in 5 days</div>
+<div class="text-xs text-gray-400 mt-1">1 day ago</div>
+</div>
+</div>
+</div>
+`;
+document.body.appendChild(dialog);
+dialog.addEventListener('click', (e) => {
+if (e.target === dialog) {
+dialog.remove();
+}
+});
+});
+});
+</script>
+</body>
+</html>
